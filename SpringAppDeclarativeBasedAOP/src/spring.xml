@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   
+    xmlns:aop="http://www.springframework.org/schema/aop"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd   
+    http://www.springframework.org/schema/aop   
+    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd ">  
+       <!-- Target class -->
+      
+      <bean id="target" class="com.shra4Java.Instrumentalist">
+      	<property name="instrument">
+      		<bean class="com.shra4Java.Guitar"></bean>
+      	</property>
+      </bean> 
+         
+       <!-- Advice  --> 
+      <bean id="audience" class="com.shra4Java.Audience"></bean>
+       
+          
+       <!--  Declarative based AOP -->
+       
+       <aop:config>
+       <aop:aspect ref="audience">
+       	<aop:pointcut expression = "execution(* com.shra4Java.Performer.perform(..))"
+         id="performance" />
+       
+       <aop:before method="takingSeats" pointcut-ref = "performance"/>
+       <aop:after-returning method="clap" pointcut-ref = "performance"/>
+       <aop:around method = "watchPerformance" pointcut-ref = "performance"/>
+       <aop:after-throwing method = "demandMoney" pointcut-ref="performance"/>
+       </aop:aspect>
+       </aop:config>  
+    
+                    
+</beans>
