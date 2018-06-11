@@ -15,7 +15,6 @@ public class Test {
 		
 		ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
 		
-		
 		Employee emp = (Employee) context.getBean("employee",Employee.class);
 		
 		emp.display();
